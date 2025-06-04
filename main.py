@@ -48,9 +48,9 @@ while True:
     elif cmd == "complete measure":
         sa.measure()
         print(f"Maximum length value: {sa.max_length} cm (Sensor ID: {sa.max_length_id})")
-    elif cmd == "complete calibrate": # calibrated = False will never be !!! -> calibration 0 gives error -> default value is max_distance_in_cm
+    elif cmd == "complete calibrate":
         sa.calibrate()
-        if sa.front_back_diff != -1 and sa.left_right_diff != -1: # -1 error value -> diff can be -1 !!!
+        if sa.front_back_diff != -1 and sa.left_right_diff != -1:
             print(f"Front-Back difference: {sa.front_back_diff} cm")
             print(f"Left-Right difference: {sa.left_right_diff} cm")
         else:
@@ -80,4 +80,18 @@ while True:
         print("  calibrate all - Calibrate all sensors and calculate axis differences.")
         print("  shots [number] - Set the number of shots for each sensor.")
         print("  exit - Exit the program.")
+    elif cmd == "print meas":
+        # Print measurements.txt
+        try:
+            with open("measurements.txt", "r") as f:
+                print(f.read())
+        except FileNotFoundError:
+            print("No measurements.txt found.")
+    elif cmd == "print calib":
+        # Print calibrations.txt
+        try:
+            with open("calibrations.txt", "r") as f:
+                print(f.read())
+        except FileNotFoundError:
+            print("No calibrations.txt found.")
 
