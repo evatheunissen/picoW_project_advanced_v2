@@ -63,6 +63,8 @@ class Sensor:
         distance = self.distance_in_cm
         if distance > -1: # 0 is a valid distance, -1 is an error
             self.length_in_cm = self.distance_to_floor_in_cm - distance
+            if (self.length_in_cm < 0):
+                self.length_in_cm = -4 # Error handling: if length is negative, return -4 to indicate error
         else:
             self.length_in_cm = distance # Error handling: if distance is -1 or -2 or -3
 
@@ -107,16 +109,13 @@ class SensorArray:
         except:
             print('\n'.join(buffer))
 
-    front_back_diff = -1
-    left_right_diff = -1
+    front_back_diff = 100
+    left_right_diff = 100
 
     def calibrate(self):
-        calibrated = True # Assume all sensors calibrate successfully
         for sensor in self.sensors:
             sensor.calibrate()
-            if sensor.distance_to_floor_in_cm < 0:
-                calibrated = False # Calibration failed for at least one sensor
-        if calibrated and len(self.sensors) == 5:
+        if len(self.sensors) == 5:
             self.front_back_diff = self.sensors[0].distance_to_floor_in_cm - self.sensors[4].distance_to_floor_in_cm
             self.left_right_diff = self.sensors[1].distance_to_floor_in_cm - self.sensors[3].distance_to_floor_in_cm
         self._print_calibration()
