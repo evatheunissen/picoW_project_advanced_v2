@@ -88,10 +88,10 @@ while True:
         except FileNotFoundError:
             print("No measurements.txt found.")
     elif cmd == "print calib":
-        # Print calibrations.txt
+        # Print calibration.txt
         try:
-            with open("calibrations.txt", "r") as f:
+            with open("calibration.txt", "r") as f:
                 print(f.read())
         except FileNotFoundError:
-            print("No calibrations.txt found.")
+            print("No calibration.txt found.")
 
